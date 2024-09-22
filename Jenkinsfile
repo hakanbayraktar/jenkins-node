@@ -28,7 +28,7 @@ pipeline {
                             if [ ! -z "$CONTAINER_ID" ]; then 
                                 docker stop "$CONTAINER_ID" && docker rm "$CONTAINER_ID"; 
                             fi;
-                            docker run -d -p --name cicd 8000:8000 hbayraktar/node-jenkins:latest"
+                            docker run -d -p 8000:8000 hbayraktar/node-jenkins:latest"
                     '''
                 }
             }
