@@ -23,11 +23,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server', keyFileVariable: 'SSH_KEY')]) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@68.183.103.190 << 'ENDSSH'
-                            docker stop $(docker ps -q --filter ancestor=hbayraktar/node-jenkins:latest) || true &&
-                            docker rm $(docker ps -aq --filter ancestor=hbayraktar/node-jenkins:latest) || true &&
-                            docker run -d -p 8000:8000 hbayraktar/node-jenkins:latest
-                        ENDSSH
+                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@68.183.103.190 "docker stop $(docker ps -q --filter ancestor=hbayraktar/node-jenkins:latest) || true && docker rm $(docker ps -aq --filter ancestor=hbayraktar/node-jenkins:latest) || true && docker run -d -p 8000:8000 hbayraktar/node-jenkins:latest"
                     '''
                 }
             }
