@@ -49,10 +49,15 @@ Jenkins suncu root kullanıcıya ait public key nodejs sunucunun /root/.ssh/auth
 *** Github repositoryde yapılacaklar ***
 
 reposotory-->Settings-->Webhooks---> Add webhook
+
 Payload URL :  http://167.71.45.214:8080/github-webhook/
+
 content type: application/json
+
 Add Webhook
 
  *** Jenkins de yapılacaklar ***
+
  jenkins pipeline job seç
- configure-->Build triggers altında--->GitHub hook trigger for GITScm polling-->save
+ configure-->Build triggers altında--->GitHub hook trigger for GITScm polling
+save
