@@ -59,5 +59,4 @@ Add Webhook
  *** Jenkins de yapılacaklar ***
 
  jenkins pipeline job seç
- configure-->Build triggers altında--->GitHub hook trigger for GITScm polling
-save
+ configure-->Build triggers altında--->GitHub hook trigger for GITScm polling-->save
