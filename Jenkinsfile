@@ -22,13 +22,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server', keyFileVariable: 'SSH_KEY')]) {
-                    sh '''
+                     sh '''
                         ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@68.183.103.190 "
-                            CONTAINER_ID=$(docker ps -q --filter ancestor=hbayraktar/node-jenkins:latest);
-                            if [ ! -z "$CONTAINER_ID" ]; then 
-                                docker rm -f $CONTAINER_ID; 
+                            CONTAINER_ID=\$(docker ps -q --filter ancestor=hbayraktar/node-jenkins:latest);
+                            if [ ! -z "\$CONTAINER_ID" ]; then 
+                                docker rm -f \$CONTAINER_ID; 
                             fi;
-                            docker run -d -p 8000:8000 hbayraktar/node-jenkins:latest"
+                            docker run -d -p 8000:8000 hbayraktar/node-jenkins:latest
+                        "
                     '''
                 }
             }
