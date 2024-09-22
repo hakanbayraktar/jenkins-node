@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Code') {
             steps {
-                git url: 'https://github.com/hakanbayraktar/jenkins-node', branch: 'master'
+                git url: 'https://github.com/hakanbayraktar/jenkins-node', branch: 'main'
             }
         }
         stage('Build and Test') {
