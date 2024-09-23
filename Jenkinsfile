@@ -26,7 +26,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'SSH_KEY')]) {
                      sh '''
-                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$SERVER_IP "
+                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@64.92.203.197"
                             
                             docker rm -f cicd 
                     
