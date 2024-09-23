@@ -1,5 +1,8 @@
 pipeline {
     agent any
+     environment {
+        SERVER_IP = credentials('SERVER_IP') // IP adresini secret'tan alıyoruz
+    }
     stages {
         stage('Code') {
             steps {
@@ -23,7 +26,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server', keyFileVariable: 'SSH_KEY')]) {
                      sh '''
-                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@68.183.103.190 "
+                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$SERVER_IP "
                             
                             docker rm -f cicd 
                     
