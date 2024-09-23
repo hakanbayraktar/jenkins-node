@@ -22,15 +22,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'SSH_KEY')]) {
-                     sh '''
-                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@164.92.203.197"
-                            
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@164.92.203.197 << EOF
                             docker rm -f cicd || true
-                    
                             docker run -d --name cicd -p 8000:8000 hbayraktar/node-jenkins:latest
-                        "
+                        EOF
                     '''
-
                 }
             }
         }
