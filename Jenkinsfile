@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    environment {
-        SERVER_IP = '164.92.203.197'  // IP adresini doğrudan environment variable olarak tanımlıyoruz
+     environment {
+        SERVER_IP = credentials('164.92.203.197') // IP adresini secret'tan alıyoruz
     }
     stages {
         stage('Code') {
@@ -25,12 +25,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'SSH_KEY')]) {
-                    sh '''
-                        ssh -tt -o StrictHostKeyChecking=no -i $SSH_KEY root@$SERVER_IP << EOF
-                            docker rm -f cicd || true
+                     sh '''
+                        ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@SERVER_IP "
+                            
+                            docker rm -f cicd 
+                    
                             docker run -d --name cicd -p 8000:8000 hbayraktar/node-jenkins:latest
-                        EOF
+                        "
                     '''
+
                 }
             }
         }
