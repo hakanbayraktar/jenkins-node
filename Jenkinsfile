@@ -1,8 +1,5 @@
 pipeline {
     agent any
-     environment {
-        SERVER_IP = credentials('164.92.203.197') // IP adresini secret'tan alıyoruz
-    }
     stages {
         stage('Code') {
             steps {
