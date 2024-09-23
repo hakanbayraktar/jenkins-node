@@ -18,9 +18,13 @@ curl -s https://raw.githubusercontent.com/hakanbayraktar/ibb-tech/refs/heads/mai
 ```
 
 Jenkins Web kurulumunu bitir.
-kurulacak pluginler
+## kurulacak pluginler
 github integration
 pipeline
+## jenkins credentials gir
+docker token
+jenkins private key
+nodejs server IP
 
 # docker install
 
