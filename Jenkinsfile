@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server', keyFileVariable: 'SSH_KEY')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'SSH_KEY')]) {
                      sh '''
                         ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$SERVER_IP "
                             
