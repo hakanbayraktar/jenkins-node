@@ -2,8 +2,11 @@
 Bu doküman, Jenkins Pipeline'ınızı bir EC2 sunucusu üzerinde çalıştırmak için gerekli adımları ve yapılandırmaları açıklar. Pipeline, node-jenkins adında bir Docker imajı oluşturur, Docker Hub'a yükler ve ardından EC2 sunucusunda çalışan docker konteynere dağıtır.
 # Gereksinimler
 **EC2 Sunucusu:** Jenkins Pipeline'ınızın bağlanabileceği, Docker yüklü ve SSH erişimi olan bir EC2 sunucusuna sahip olun.
-*Jenkins Kurulumu:* Jenkins'in EC2 sunucusuna SSH ile erişimi olması ve Docker'ı çalıştırabilecek şekilde yapılandırılmış olması gerekir.
-*Docker Hub Hesabı:* Pipeline, Docker imajını Docker Hub'a itmek için bir Docker Hub hesabı gerektirir.
+
+**Jenkins Kurulumu:** Jenkins'in EC2 sunucusuna SSH ile erişimi olması ve Docker'ı çalıştırabilecek şekilde yapılandırılmış olması gerekir.
+
+**Docker Hub Hesabı:** Pipeline, Docker imajını Docker Hub'a itmek için bir Docker Hub hesabı gerektirir.
+
 **SSH Anahtarları:** Jenkins'in EC2 sunucusuna SSH ile bağlanabilmesi için, SSH kimlik doğrulaması yapılandırılmalıdır.
 
 # 1. EC2 Sunucusunda Jenkins ve Docker Kurulumu
@@ -26,9 +29,13 @@ curl -s https://raw.githubusercontent.com/hakanbayraktar/ibb-tech/refs/heads/mai
 Jenkins'te aşağıdaki eklentilerin kurulu olduğundan emin olun:
 
 **Docker Pipeline:** Docker container'lar ile çalışmak için gerekli.
+
 **SSH Agent Plugin:** SSH anahtarlarıyla uzak sunuculara bağlanmak için gerekli.
+
 **Credentials Binding Plugin:** Kimlik bilgilerini güvenli bir şekilde pipeline'a eklemek için kullanılır.
+
 **Git Plugin:** Pipeline'da Git repository'lerini çekebilmek için gereklidir.
+
 **github integration plugin**: webhook için gerekli
 
 **Jenkins'e bu eklentileri yüklemek için:**
@@ -43,13 +50,17 @@ Jenkins Pipeline'da kullanılacak kimlik bilgileri Jenkins'te tanımlanmalıdır
 
 Manage Jenkins > Manage Credentials yolunu izleyin.
 Global scope'ta Add Credentials seçeneğini seçin.
+
 **Kind:** Username with password
+
 **ID:** dockerhub
 Docker Hub kullanıcı adı ve şifrenizi girin.
 EC2 SSH Kimlik Bilgileri:
 
 Manage Jenkins > Manage Credentials yolunu izleyin.
+
 **Kind:** SSH Username with private key
+
 **ID:** jenkins-ssh
 EC2 sunucusuna erişim sağlayan SSH private key'i girin.
 
