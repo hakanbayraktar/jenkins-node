@@ -23,8 +23,11 @@ github integration
 pipeline
 ## jenkins credentials gir
 docker token için credential id---> dockerhub
+
 jenkins private key credential id---> jenkins-ssh
+
 nodejs server IP credential id ---> SERVER_IP
+
 
 # docker install
 
