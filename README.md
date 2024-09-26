@@ -1,10 +1,10 @@
 # Jenkins Pipeline EC2 Sunucuda Çalıştırma
 Bu doküman, Jenkins Pipeline'ınızı bir EC2 sunucusu üzerinde çalıştırmak için gerekli adımları ve yapılandırmaları açıklar. Pipeline, node-jenkins adında bir Docker imajı oluşturur, Docker Hub'a yükler ve ardından EC2 sunucusunda çalışan docker konteynere dağıtır.
 # Gereksinimler
-'EC2 Sunucusu:' Jenkins Pipeline'ınızın bağlanabileceği, Docker yüklü ve SSH erişimi olan bir EC2 sunucusuna sahip olun.
-'Jenkins Kurulumu:' Jenkins'in EC2 sunucusuna SSH ile erişimi olması ve Docker'ı çalıştırabilecek şekilde yapılandırılmış olması gerekir.
-'Docker Hub Hesabı:' Pipeline, Docker imajını Docker Hub'a itmek için bir Docker Hub hesabı gerektirir.
-'SSH Anahtarları:' Jenkins'in EC2 sunucusuna SSH ile bağlanabilmesi için, SSH kimlik doğrulaması yapılandırılmalıdır.
+**EC2 Sunucusu:** Jenkins Pipeline'ınızın bağlanabileceği, Docker yüklü ve SSH erişimi olan bir EC2 sunucusuna sahip olun.
+*Jenkins Kurulumu:* Jenkins'in EC2 sunucusuna SSH ile erişimi olması ve Docker'ı çalıştırabilecek şekilde yapılandırılmış olması gerekir.
+*Docker Hub Hesabı:* Pipeline, Docker imajını Docker Hub'a itmek için bir Docker Hub hesabı gerektirir.
+**SSH Anahtarları:** Jenkins'in EC2 sunucusuna SSH ile bağlanabilmesi için, SSH kimlik doğrulaması yapılandırılmalıdır.
 
 # 1. EC2 Sunucusunda Jenkins ve Docker Kurulumu
 EC2 sunucusunda Jenkins ve Docker kurulumunu yapmak için kullanmanız gereken UserData script'i şu şekildedir:
@@ -25,13 +25,13 @@ curl -s https://raw.githubusercontent.com/hakanbayraktar/ibb-tech/refs/heads/mai
 # 2. Jenkins Pipeline İçin Gerekli Eklentiler
 Jenkins'te aşağıdaki eklentilerin kurulu olduğundan emin olun:
 
-Docker Pipeline: Docker container'lar ile çalışmak için gerekli.
-SSH Agent Plugin: SSH anahtarlarıyla uzak sunuculara bağlanmak için gerekli.
-Credentials Binding Plugin: Kimlik bilgilerini güvenli bir şekilde pipeline'a eklemek için kullanılır.
-Git Plugin: Pipeline'da Git repository'lerini çekebilmek için gereklidir.
-github integration plugin
+**Docker Pipeline:** Docker container'lar ile çalışmak için gerekli.
+**SSH Agent Plugin:** SSH anahtarlarıyla uzak sunuculara bağlanmak için gerekli.
+**Credentials Binding Plugin:** Kimlik bilgilerini güvenli bir şekilde pipeline'a eklemek için kullanılır.
+**Git Plugin:** Pipeline'da Git repository'lerini çekebilmek için gereklidir.
+**github integration plugin**: webhook için gerekli
 
-Jenkins'e bu eklentileri yüklemek için:
+**Jenkins'e bu eklentileri yüklemek için:**
 
 Manage Jenkins > Manage Plugins yolunu izleyin.
 Available sekmesinde yukarıdaki eklentileri aratıp yükleyin.
@@ -39,18 +39,18 @@ Available sekmesinde yukarıdaki eklentileri aratıp yükleyin.
 # 3. Jenkins Pipeline İçin Kimlik Bilgilerini Ayarlayın
 Jenkins Pipeline'da kullanılacak kimlik bilgileri Jenkins'te tanımlanmalıdır:
 
-Docker Hub Kimlik Bilgileri:
+**Docker Hub Kimlik Bilgileri:**
 
 Manage Jenkins > Manage Credentials yolunu izleyin.
 Global scope'ta Add Credentials seçeneğini seçin.
-Kind: Username with password
-ID: dockerhub
+**Kind:** Username with password
+**ID:** dockerhub
 Docker Hub kullanıcı adı ve şifrenizi girin.
 EC2 SSH Kimlik Bilgileri:
 
 Manage Jenkins > Manage Credentials yolunu izleyin.
-Kind: SSH Username with private key
-ID: jenkins-ssh
+**Kind:** SSH Username with private key
+**ID:** jenkins-ssh
 EC2 sunucusuna erişim sağlayan SSH private key'i girin.
 
 # 4. Jenkinsfile Pipeline Script
@@ -103,15 +103,17 @@ pipeline {
 }
 ```
 # 5. EC2 Sunucusunda Docker ve SSH Permission Ayarları
-Docker Kurulumu: EC2 sunucusuna Docker kurulumunu yaptıktan sonra, Jenkins kullanıcısının Docker'ı root izni olmadan çalıştırabilmesi için kullanıcıyı docker grubuna ekleyin:
+**Docker Kurulumu:** EC2 sunucusuna Docker kurulumunu yaptıktan sonra, Jenkins kullanıcısının Docker'ı root izni olmadan çalıştırabilmesi için kullanıcıyı docker grubuna ekleyin:
 
 ```bash
 sudo usermod -aG docker jenkins
 ```
 # ssh key oluştur docker servere bağlanabilmesi için
+```bash
 ssh-keygen -t rsa -b 4096 
+```
 
-SSH Erişimi: EC2 docker sunucusunda, Jenkins pipeline'da kullanılacak olan public key'i ~/.ssh/authorized_keys dosyasına ekleyin. Bu dosya şuna benzer olmalıdır:
+**SSH Erişimi:** EC2 docker sunucusunda, Jenkins pipeline'da kullanılacak olan public key'i ~/.ssh/authorized_keys dosyasına ekleyin. Bu dosya şuna benzer olmalıdır:
 ```bash
 echo "your-public-key" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
